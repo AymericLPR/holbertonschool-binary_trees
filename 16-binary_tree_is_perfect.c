@@ -1,42 +1,23 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_height - Entry point
+ * binary_tree_nodes - Entry point
  * @tree: binary_tree parameter
- * Return: the highest side
+ * Return: size_t
  */
 
-size_t binary_tree_height(const binary_tree_t *tree)
+size_t binary_tree_nodes(const binary_tree_t *tree)
 {
-	size_t left = 0, right = 0;
-
-	if (!tree || (!tree->left && !tree->right))
-		return (0);
-	left = 1 + binary_tree_height(tree->left);
-	right = 1 + binary_tree_height(tree->right);
-	if (left > right)
-		return (left);
-	return (right);
-}
-
-/**
- * binary_tree_balance - Entry point
- * @tree: binary_tree parameter
- * Return: the balance of the tree
- */
-
-int binary_tree_balance(const binary_tree_t *tree)
-{
-	size_t left_height = 0;
-	size_t right_height = 0;
+	size_t count = 0;
 
 	if (!tree)
 		return (0);
-	if (tree->left)
-		left_height = 1 + binary_tree_height(tree->left);
-	if (tree->right)
-		right_height = 1 + binary_tree_height(tree->right);
-	return (left_height - right_height);
+	if (!tree->left && !tree->right)
+		return (0);
+	count += 1;
+	count += binary_tree_nodes(tree->left);
+	count += binary_tree_nodes(tree->right);
+	return (count);
 }
 
 /**
@@ -71,11 +52,15 @@ int binary_tree_is_full(const binary_tree_t *tree)
 
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-  if (!tree)
-    return (0);
-  if (binary_tree_is_full(tree) == 0)
-    return (0);
-  if (binary_tree_balance(tree) == 0)
-    return (1);
-  return (0);
+        int left = 0, right = 0;
+
+	if (!tree)
+		return (0);
+	if (binary_tree_is_full(tree) == 0)
+		return (0);
+	left = binary_tree_nodes(tree->left);
+	right = binary_tree_nodes(tree->right);
+		if (left == right)
+			return (1);
+	return (0);
 }
