@@ -11,12 +11,14 @@
  */
 void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int))
 {
-	void (*d)(int);
 
-	d = func;
 
 	if (tree)
 	{
+		void (*d)(int);
+
+		d = func;
+
 		d(tree->n);
 		binary_tree_preorder(tree->left, d);
 		binary_tree_preorder(tree->right, d);
